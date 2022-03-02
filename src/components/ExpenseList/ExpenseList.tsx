@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as S from "./expense_list.styles"
 import { Input } from '../common/Input/Input.styles';
+import Expense from "../Expense"
 
 type expenseObject = {
   description: string,
@@ -11,7 +12,7 @@ type expenseObject = {
 
 export function ExpenseList() {
 
-  const [expenses, setExpenses] = useState<Array<Object>>([]);
+  const [expenses, setExpenses] = useState<Array<expenseObject>>([]);
   const [categories, setCategories] = useState<Array<string>>([
     "Autres",
     "Alimentation",
@@ -68,7 +69,13 @@ export function ExpenseList() {
         }
       </S.AddExpenseWrapper>
       <S.ExpenseListWrapper>
-        
+        {
+          expenses && expenses.map((item: expenseObject, index: number) => {
+            return (
+              <Expense description={item.description} key={index}/>
+            )
+          })
+        }
       </S.ExpenseListWrapper>
     </S.ExpenseWrapper>
   )
