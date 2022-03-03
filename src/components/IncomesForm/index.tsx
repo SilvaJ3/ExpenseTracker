@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import * as S from "./expensesform.styles";
+import * as S from "./incomesform.styles";
 import { Input } from '../common/Input/Input.styles';
 import { v4 as uuidv4 } from 'uuid'
 
 type Props = {
-  handleSubmitForm: (item: expenseObject) => void
+  handleSubmitForm: (item: incomeObject) => void
 }
 
-type expenseObject = {
+type incomeObject = {
   id: string,
   description: string,
   value: number,
@@ -15,9 +15,9 @@ type expenseObject = {
   date: string
 }
 
-export default function ExpensesForm ({handleSubmitForm}: Props) {
+export default function IncomesForm ({handleSubmitForm}: Props) {
 
-  const expense_form = useRef<HTMLFormElement>(null);
+  const income_form = useRef<HTMLFormElement>(null);
   const description_input = useRef<HTMLInputElement>(null);
   const value_input = useRef<HTMLInputElement>(null);
   const category_input = useRef<HTMLSelectElement>(null);
@@ -50,19 +50,17 @@ export default function ExpensesForm ({handleSubmitForm}: Props) {
 
   const [categories, setCategories] = useState<Array<string>>([
     "Autres",
-    "Alimentation",
-    "Assurance",
-    "Banque",
-    "Energie",
-    "Loisirs",
-    "Loyer",
-    "Santé",
-    "Sports"
+    "Chômage",
+    "Gain",
+    "Impôt",
+    "Lotto",
+    "Remboursement",
+    "Salaire",
   ]);
 
   return (
-    <S.AddExpenseForm ref={expense_form} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
-      <Input name="description" type="text" placeholder="Description de votre dépense..." ref={description_input}/>
+    <S.AddIncomeForm ref={income_form} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
+      <Input name="description" type="text" placeholder="Description de votre recette..." ref={description_input}/>
       <Input name="value" type="number" placeholder="42" ref={value_input}/>
       <select ref={category_input} name="category">
         {
@@ -75,6 +73,6 @@ export default function ExpensesForm ({handleSubmitForm}: Props) {
       </select>
       <Input name="date" type="date" ref={date_input}/>
       <button type="submit">Valider</button>
-    </S.AddExpenseForm>
+    </S.AddIncomeForm>
   )
 }

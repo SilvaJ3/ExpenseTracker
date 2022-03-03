@@ -22,7 +22,6 @@ export function ExpenseList() {
   const handleSubmitForm = (item: expenseObject) => {
 
     console.log(item);
-    
 
     const expense_content:expenseObject = {
       id: uuidv4(),

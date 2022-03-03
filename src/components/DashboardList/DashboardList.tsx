@@ -1,11 +1,13 @@
 import React from 'react'
-import "./DashboardList.css"
+import * as S from "./DashboardList.styles"
 import { ExpenseList } from '../ExpenseList'
+import IncomeList from '../IncomeList'
 
 export function DashboardList() {
   return (
-    <div>
+    <S.ListWrapper>
       <ExpenseList />
-    </div>
+      <IncomeList />
+    </S.ListWrapper>
   )
 }
