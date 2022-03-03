@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as S from "./expense_list.styles"
 import { Input } from '../common/Input/Input.styles';
-import Expense from "../Expense"
+import Expense from "../Expense";
+import { v4 as uuidv4 } from 'uuid'
+import { item_action } from '../Expense/expense.styles';
 
 type expenseObject = {
+  id: string,
   description: string,
   value: number,
   category: string,
@@ -37,13 +40,19 @@ export function ExpenseList() {
     e.preventDefault();
 
     const expense_content:expenseObject = {
+      id: uuidv4(),
       description: description_input.current!.value,
       value: parseInt(value_input.current!.value),
       category: category_input.current!.value,
       date: date_input.current!.value
     }
     
-    setExpenses([...expenses, expense_content])
+    setExpenses([...expenses, expense_content]);
+  }
+
+  const onDeleteItem = (id: string): void => {
+    const filteredExpenses = expenses.filter(item => item.id != id);
+    setExpenses(filteredExpenses);
   }
 
   return (
@@ -72,7 +81,15 @@ export function ExpenseList() {
         {
           expenses && expenses.map((item: expenseObject, index: number) => {
             return (
-              <Expense description={item.description} key={index}/>
+              <Expense 
+              description={item.description} 
+              value={item.value}
+              category={item.category}
+              date={item.date}
+              key={index}
+              id={item.id}
+              onDeleteItem={onDeleteItem}
+              />
             )
           })
         }
