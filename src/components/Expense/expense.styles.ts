@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const expenseItem = styled.li`
   list-style-type: none;
   display: flex;
+  border: solid 1px black;
+  border-radius: 15px;
+  padding: 2%;
 `
 
 export const item_content = styled.div`

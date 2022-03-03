@@ -24,14 +24,8 @@ export const AddExpenseBtn = styled.button`
   font-size: 20px;
 `
 
-export const AddExpenseForm = styled.form`
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(2, 200px);
-  gap: 4px;
-`
-
 export const ExpenseListWrapper = styled.ul`
-  display: grid;
-  grid-template: repeat(2, 200px);
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
 `
