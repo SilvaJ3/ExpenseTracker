@@ -4,8 +4,11 @@ export const IncomeWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: start;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const AddIncomeWrapper = styled.div`
@@ -28,4 +31,6 @@ export const IncomeListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   padding-left: 0;
+  gap: 5px;
+  padding: 0 5%;
 `

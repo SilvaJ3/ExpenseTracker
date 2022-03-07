@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DashboardList } from './components/DashboardList/DashboardList';
+import { DashboardList } from './components/DashboardList';
+import DashboardResume from './components/DashboardResume';
+import * as S from "./App.styles"
 
 function App() {
 
   return (
-    <div className="App">
+    <S.Dashboard_Wrapper>
+      <DashboardResume />
       <DashboardList />
-    </div>
+    </S.Dashboard_Wrapper>
   );
 }
 

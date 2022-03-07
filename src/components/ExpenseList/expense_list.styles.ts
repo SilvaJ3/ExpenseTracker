@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const ExpenseWrapper = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: start;
+  height: 100%;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const AddExpenseWrapper = styled.div`
@@ -27,5 +32,7 @@ export const AddExpenseBtn = styled.button`
 export const ExpenseListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   padding-left: 0;
+  padding: 0 5%;
 `

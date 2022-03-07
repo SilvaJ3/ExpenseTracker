@@ -8,10 +8,10 @@ type IncomeProps = {
   category: string,
   date: string,
   id: string,
-  onDeleteItem: (arg: string) => void
+  onDeleteIncome: (arg: string) => void
 }
 
-export default function Income ({description, value, category, date, id, onDeleteItem}: IncomeProps) {
+export default function Income ({description, value, category, date, id, onDeleteIncome}: IncomeProps) {
   return (
     <S.incomeItem>
       <S.item_content>
@@ -21,7 +21,7 @@ export default function Income ({description, value, category, date, id, onDelet
       </S.item_content>
       <S.item_action>
         {/* <Button text={`Edition`}/> */}
-        <button onClick={() => onDeleteItem(id)}>Supprimer</button>
+        <button onClick={() => onDeleteIncome(id)}>Supprimer</button>
       </S.item_action>
     </S.incomeItem>
   )

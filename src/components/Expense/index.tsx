@@ -11,10 +11,11 @@ type ExpenseProps = {
   category: string,
   date: string,
   id: string,
-  onDeleteItem: (arg: string) => void
+  onDeleteItem: (arg: string) => void,
+  onEditItem: (arg: string) => void
 }
 
-export default function Expense({description, value, category, date, id, onDeleteItem}: ExpenseProps) {
+export default function Expense({description, value, category, date, id, onDeleteItem, onEditItem}: ExpenseProps) {
   return (
     <S.expenseItem>
       <S.item_content>
@@ -23,8 +24,8 @@ export default function Expense({description, value, category, date, id, onDelet
         <Text text={`Catégorie : ${category}`}/>
       </S.item_content>
       <S.item_action>
-        {/* <Button text={`Edition`}/> */}
         <button onClick={() => onDeleteItem(id)}>Supprimer</button>
+        <button onClick={() => onEditItem(id)}>Modifier</button>
       </S.item_action>
     </S.expenseItem>
   )

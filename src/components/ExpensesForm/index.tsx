@@ -4,7 +4,7 @@ import { Input } from '../common/Input/Input.styles';
 import { v4 as uuidv4 } from 'uuid'
 
 type Props = {
-  handleSubmitForm: (item: expenseObject) => void
+  handleSubmitFormExpense: (item: expenseObject) => void
 }
 
 type expenseObject = {
@@ -15,7 +15,7 @@ type expenseObject = {
   date: string
 }
 
-export default function ExpensesForm ({handleSubmitForm}: Props) {
+export default function ExpensesForm ({handleSubmitFormExpense}: Props) {
 
   const expense_form = useRef<HTMLFormElement>(null);
   const description_input = useRef<HTMLInputElement>(null);
@@ -37,7 +37,7 @@ export default function ExpensesForm ({handleSubmitForm}: Props) {
         date: date_input.current!.value
       }
   
-      handleSubmitForm(item)
+      handleSubmitFormExpense(item)
   
       description_input.current!.value = "";
       value_input.current!.value = "";
