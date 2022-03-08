@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import EditForm from "../EditForm";
 import { v4 as uuidv4 } from "uuid";
 import CloseBtn from '../common/CloseBtn/CloseBtn';
+import {useModal} from "../../hooks/useModal"
 
 interface itemObject {
   id: string;
@@ -23,7 +24,7 @@ export function DashboardList() {
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
 
   const [toggleList, setToggleList] = useState<boolean>(true);
-  const [displayModal, setDisplayModal] = useState<boolean>(false);
+  const {displayModal, setDisplayModal} = useModal();
 
   const getLocalStorage = (item: string) => {
     if (item === "expenses") {
@@ -99,17 +100,30 @@ export function DashboardList() {
     setDisplayModal(true);
   };
 
+  const onEditItemIncome = (id: string): void => {
+    let item = incomes.find((item) => item.id === id);
+    setCurrentItemEdition(item);
+    setDisplayModal(true);
+  };
+
   const onDeleteIncome = (id: string): void => {
     const filteredIncomes = incomes.filter((item) => item.id != id);
     setIncomes(filteredIncomes);
   };
 
   const handleEditForm = (editedItem: itemObject): void => {
-    const filteredExpenses = expenses.filter((item) => item.id !== editedItem.id);
+    const filteredExpenses = expenses.filter((item: itemObject) => item.id !== editedItem.id);
     filteredExpenses.push(editedItem);
     setExpenses(filteredExpenses);
     setDisplayModal(false);
   };
+
+  const handleEditFormIncome = (editedItem: itemObject): void => {
+    const filteredIncomes = incomes.filter((item: itemObject) => item.id !== editedItem.id);
+    filteredIncomes.push(editedItem);
+    setIncomes(filteredIncomes);
+    setDisplayModal(false);
+  }
 
   function displayList() {
     if (toggleList) {
@@ -120,7 +134,7 @@ export function DashboardList() {
           {
             displayModal && 
               <Modal>
-                <CloseBtn />
+                <CloseBtn/>
                 <EditForm item={currentItemEdition} handleEditForm={handleEditForm}/>
               </Modal>
           }
@@ -130,11 +144,12 @@ export function DashboardList() {
       return (
         <>
           <S.ToggleListBtn onClick={(): void => setToggleList(!toggleList)}>Afficher les Dépenses</S.ToggleListBtn>
-          <IncomeList incomes={incomes} handleSubmitFormIncome={handleSubmitFormIncome} onDeleteIncome={onDeleteIncome}/>
+          <IncomeList incomes={incomes} handleSubmitFormIncome={handleSubmitFormIncome} onDeleteIncome={onDeleteIncome} onEditItemIncome={onEditItemIncome}/>
           {
             displayModal && 
             <Modal>
-                {/* <EditForm /> */}
+                <CloseBtn/>
+                <EditForm item={currentItemEdition} handleEditForm={handleEditFormIncome}/>
             </Modal>
           }
         </>

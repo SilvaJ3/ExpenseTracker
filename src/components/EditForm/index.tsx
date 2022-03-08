@@ -12,7 +12,8 @@ export interface ItemObject {
 }
 
 interface EditFormProps {
-  handleEditForm: (editedItem: ItemObject) => void;
+  handleEditForm?: (editedItem: ItemObject) => void;
+  handleEditFormIncome?: (editedItem: ItemObject) => void;
   item: ItemObject;
 }
 
@@ -26,6 +27,8 @@ export default function EditForm(props: any) {
   const { categories } = useCategories();
 
   useEffect(() => {
+    console.log(props);
+    
     description_input.current!.value = props.item.description;
     value_input.current!.value = props.item.value;
     date_input.current!.value = props.item.date;
@@ -47,8 +50,6 @@ export default function EditForm(props: any) {
         category: category_input.current!.value,
         date: date_input.current!.value,
       };
-
-      console.log(editedItem);
 
       props.handleEditForm(editedItem);
     }

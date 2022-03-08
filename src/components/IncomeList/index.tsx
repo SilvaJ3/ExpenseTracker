@@ -37,6 +37,7 @@ export default function IncomeList(props: any) {
                 key={index}
                 id={item.id}
                 onDeleteIncome={props.onDeleteIncome}
+                onEditItemIncome={props.onEditItemIncome}
               />
             );
           })}
