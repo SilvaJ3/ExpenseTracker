@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../common/Input/Input.styles";
-import { item_action } from "../Income/income.styles";
+import useCategories from "../../hooks/useCategories";
 import * as S from "./editform.styles";
 
 export interface ItemObject {
@@ -23,17 +23,7 @@ export default function EditForm(props: any) {
   let category_input = useRef<HTMLSelectElement>(null);
   let date_input = useRef<HTMLInputElement>(null);
 
-  const [categories, setCategories] = useState<Array<string>>([
-    "Autres",
-    "Alimentation",
-    "Assurance",
-    "Banque",
-    "Energie",
-    "Loisirs",
-    "Loyer",
-    "Santé",
-    "Sports",
-  ]);
+  const { categories } = useCategories();
 
   useEffect(() => {
     description_input.current!.value = props.item.description;

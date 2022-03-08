@@ -10,18 +10,17 @@ interface itemObject {
   value: number;
   category: string;
   date: string;
-};
+}
 
 interface iChartProps {
-  data: itemObject[] | undefined
+  data: itemObject[] | undefined;
 }
 
 export default function StatsContent(props: iChartProps) {
-
   return (
-  <S.StatsWrapper>
-    <Chart datainfo={props.data}/>
-    <StatsChartDetails datainfo={props.data}/>
-  </S.StatsWrapper>
+    <S.StatsWrapper>
+      <Chart datainfo={props.data} />
+      <StatsChartDetails datainfo={props.data} />
+    </S.StatsWrapper>
   );
 }

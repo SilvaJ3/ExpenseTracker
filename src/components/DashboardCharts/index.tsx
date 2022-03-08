@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import useColors from "../../hooks/useColors"
 
 interface dataCharts {
   name: string,
@@ -11,12 +12,10 @@ export default function DashboardCharts (datainfo: any) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    
     setData(datainfo.datainfo);
-    
   }, [datainfo])
 
-  const COLORS = ['#00C49F', '#FF8042'];
+  const {COLORS} = useColors();
 
   return (
     <ResponsiveContainer width="100%" height="100%">

@@ -2,7 +2,7 @@ import React, { BaseSyntheticEvent } from 'react'
 import * as S from "./expense.styles"
 import BodyTitle from '../common/BodyTitle/bodyTitle';
 import Text from "../common/Text/Text";
-import Button from "../common/ButtonAction/ButtonAction"
+
 
 
 type ExpenseProps = {

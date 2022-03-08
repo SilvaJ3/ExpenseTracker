@@ -25,26 +25,35 @@ export function DashboardList() {
   const [toggleList, setToggleList] = useState<boolean>(true);
   const [displayModal, setDisplayModal] = useState<boolean>(false);
 
+  const getLocalStorage = (item: string) => {
+    if (item === "expenses") {
+      if (localStorage.getItem(item)) {
+        const localStore = localStorage.getItem(item);
+        const parseStore = JSON.parse(localStore!);
+        if (parseStore[0]) {
+          setExpenses(parseStore);
+        }
+      }
+    } else {
+      if (localStorage.getItem(item)) {
+        const localStore = localStorage.getItem(item);
+        const parseStore = JSON.parse(localStore!);
+        if (parseStore[0]) {
+          setIncomes(parseStore)
+        }
+      }
+    }
+  }
+
   /* -------------------------------------------------------------------------- */
   /*                  useEffect pour récupérer le localStorage                  */
   /* -------------------------------------------------------------------------- */
 
   useEffect(() => {
     
-    if (localStorage.getItem("expenses")) {
-      const localStore = localStorage.getItem("expenses");
-      const parseStore = JSON.parse(localStore!);
-      if (parseStore[0]) {
-        setExpenses(parseStore);
-      }
-    }
-    if (localStorage.getItem("incomes")) {
-      const localStore = localStorage.getItem("incomes");
-      const parseStore = JSON.parse(localStore!);
-      if (parseStore[0]) {
-        setIncomes(parseStore)
-      }
-    }
+    getLocalStorage("expenses");
+    getLocalStorage("incomes");
+
   }, []);
 
   /* -------------------------------------------------------------------------- */

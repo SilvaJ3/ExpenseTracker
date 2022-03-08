@@ -19,34 +19,43 @@ export default function DashboardResume () {
 
   let value = 0;
 
-  useEffect(() => {
-    if (localStorage.getItem("incomes")) {
-      const localStore = localStorage.getItem("incomes");
-      const parseStore = JSON.parse(localStore!);
-      
-      if (parseStore[0]) {
-        parseStore.forEach( (element: itemObject) => {
-          value = value + element.value;
-        });
+  const getLocalStorage = (item: string) => {
+    if (item === "expenses") {
+      if (localStorage.getItem("incomes")) {
+        const localStore = localStorage.getItem("incomes");
+        const parseStore = JSON.parse(localStore!);
         
-        setIncomeTotal(value);
-        value = 0;
+        if (parseStore[0]) {
+          parseStore.forEach( (element: itemObject) => {
+            value = value + element.value;
+          });
+          
+          setIncomeTotal(value);
+          value = 0;
+        }
+      }
+    } else {
+      if (localStorage.getItem("expenses")) {
+        const localStore = localStorage.getItem("expenses");
+        const parseStore = JSON.parse(localStore!);
+        
+        if (parseStore[0]) {
+          parseStore.forEach( (element: itemObject) => {
+            value = value + element.value;
+          });
+          
+          setExpenseTotal(value);
+          value = 0;
+        }
       }
     }
+  }
 
-    if (localStorage.getItem("expenses")) {
-      const localStore = localStorage.getItem("expenses");
-      const parseStore = JSON.parse(localStore!);
-      
-      if (parseStore[0]) {
-        parseStore.forEach( (element: itemObject) => {
-          value = value + element.value;
-        });
-        
-        setExpenseTotal(value);
-        value = 0;
-      }
-    }
+  useEffect(() => {
+    
+    getLocalStorage("expenses")
+    getLocalStorage("incomes")
+
   }, [])
 
   return (

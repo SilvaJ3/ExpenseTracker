@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import * as S from "./chart.styles"
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { ItemObject } from '../../EditForm';
+import useColors from '../../../hooks/useColors';
 import _ from "lodash"
 
 interface dataCharts {
@@ -42,16 +42,7 @@ export default function Chart (props: iChartProps) {
 
   }, [props.datainfo])
 
-  const COLORS = [
-    "rgba(255, 99, 132, .6)",
-    "rgba(54, 162, 235, .6)",
-    "rgba(255, 206, 86, .6)",
-    "rgba(75, 192, 192, .6)",
-    "rgba(153, 159, 64, .6)",
-    "rgba(255, 159, 64, .6)",
-    "rgba(56, 159, 64, .6)",
-    "rgba(200, 100, 82, .6)"
-  ];
+  const {COLORS} = useColors();
 
   return (
     <S.ChartWrapper>

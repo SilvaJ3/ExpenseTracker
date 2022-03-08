@@ -55,7 +55,7 @@ export default function Table (props: any) {
           {
             currentData[0] && currentData.map((item: itemObject) => {
               return(
-                <TableRow data={item}/>
+                <TableRow data={item} key={item.id}/>
               )
             })
           }
