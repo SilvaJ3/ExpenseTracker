@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const TableWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `
 
 export const Category_List = styled.ul`
@@ -21,22 +21,22 @@ export const Category_List_item = styled.li`
 `
 
 export const TableElement = styled.table`
-
+  border: solid 1px black;
 `
 
 export const TableHead = styled.thead`
-
+  border: solid 1px black;
 `
 
 export const TableRow = styled.tr`
-
+  border: solid 1px black;
 `
 
 export const TableRow_Th = styled.th`
-
+  border: solid 1px black;
 `
 
 export const TableBody = styled.tbody`
-
+  border: solid 1px black;
 `
 
