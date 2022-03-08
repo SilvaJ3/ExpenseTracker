@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import useColors from "../../hooks/useColors"
+import getJsonData, {JsonDataType} from "../../hooks/getJsonData"
 
 interface dataCharts {
   name: string,
@@ -10,12 +10,14 @@ interface dataCharts {
 export default function DashboardCharts (datainfo: any) {
   
   const [data, setData] = useState([]);
+  const [colors, setColors] = useState<Array<string>>([]);
 
   useEffect(() => {
     setData(datainfo.datainfo);
+    const result = getJsonData(JsonDataType.colors);
+    setColors(result as string[]);
   }, [datainfo])
 
-  const {COLORS} = useColors();
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -25,13 +27,12 @@ export default function DashboardCharts (datainfo: any) {
             cx="50%"
             cy="50%"
             labelLine={false}
-            // label={renderCustomizedLabel}
             outerRadius={80}
             fill="#8884d8"
             dataKey="value"
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
           <Tooltip />

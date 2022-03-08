@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as S from "./incomesform.styles";
 import { Input } from "../common/Input/Input.styles";
 import { v4 as uuidv4 } from "uuid";
-import incomes from "../../data/incomes.json";
+import getJsonData, {JsonDataType} from "../../hooks/getJsonData"
 
 type Props = {
   handleSubmitFormIncome: (item: incomeObject) => void;
@@ -22,6 +22,13 @@ export default function IncomesForm({ handleSubmitFormIncome }: Props) {
   const value_input = useRef<HTMLInputElement>(null);
   const category_input = useRef<HTMLSelectElement>(null);
   const date_input = useRef<HTMLInputElement>(null);
+
+  const [category, setCategory] = useState<Array<string>>([])
+
+  useEffect(() => {
+    const result = getJsonData(JsonDataType.incomes);
+    setCategory(result as string[]);
+  }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,8 +69,8 @@ export default function IncomesForm({ handleSubmitFormIncome }: Props) {
       />
       <Input name="value" type="number" placeholder="42" ref={value_input} />
       <select ref={category_input} name="category">
-        {incomes.incomes &&
-          incomes.incomes.map((item: string, index: number) => {
+        {category &&
+          category.map((item: string, index: number) => {
             return (
               <option value={item} key={index}>
                 {item}

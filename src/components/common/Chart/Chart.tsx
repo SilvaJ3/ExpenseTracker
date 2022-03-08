@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import * as S from "./chart.styles"
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import useColors from '../../../hooks/useColors';
+import getJsonData, { JsonDataType } from '../../../hooks/getJsonData';
 import _ from "lodash"
 
 interface dataCharts {
@@ -24,9 +24,9 @@ interface iChartProps {
 export default function Chart (props: iChartProps) {
 
   const [data, setData] = useState<Array<dataCharts>>();
+  const [colors, setColors] = useState<Array<string>>([]);
 
-  useEffect(() => {
-    
+  const mergeData = () => {
     let result = _.chain(props.datainfo)
       .groupBy('category')
       .map((item: any | itemObject, category) => {
@@ -36,13 +36,20 @@ export default function Chart (props: iChartProps) {
           };
       })
       .value();
+    setData(result);
+  }
 
-      setData(result);
-    
 
+
+  useEffect(() => {
+    mergeData();
   }, [props.datainfo])
+    
+    useEffect(() => {
+      const result = getJsonData(JsonDataType.colors);
+      setColors(result as string[]);
+    }, [])
 
-  const {COLORS} = useColors();
 
   return (
     <S.ChartWrapper>
@@ -60,7 +67,7 @@ export default function Chart (props: iChartProps) {
               dataKey="value"
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
               ))}
             </Pie>
             <Tooltip />

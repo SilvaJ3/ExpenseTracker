@@ -46,23 +46,18 @@ export function DashboardList() {
     }
   }
 
-  /* -------------------------------------------------------------------------- */
-  /*                  useEffect pour récupérer le localStorage                  */
-  /* -------------------------------------------------------------------------- */
-
   useEffect(() => {
-    
     getLocalStorage("expenses");
     getLocalStorage("incomes");
-
   }, []);
 
-  /* -------------------------------------------------------------------------- */
-  /*                    useEffect pour update le localStorage                   */
-  /* -------------------------------------------------------------------------- */
-  useEffect(() => {
+  const updateLocalStorage = () => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
-    localStorage.setItem("incomes", JSON.stringify(incomes))
+    localStorage.setItem("incomes", JSON.stringify(incomes));
+  }
+
+  useEffect(() => {
+    updateLocalStorage();
   }, [expenses, incomes]);
 
   const handleSubmitFormExpense = (item: itemObject) => {

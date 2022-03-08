@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as S from "./resume.styles";
 import BodyTitle from "../../common/BodyTitle/bodyTitle";
 import Table from "../../common/Table/Table";
-import expensesCategories from "../../../data/expenses.json";
-import incomesCategories from "../../../data/incomes.json";
+import getJsonData, {JsonDataType} from "../../../hooks/getJsonData"
 
 interface itemObject {
   id: string;
@@ -16,6 +15,16 @@ interface itemObject {
 export default function Resume() {
   const [expenses, setExpenses] = useState<Array<itemObject>>([]);
   const [incomes, setIncomes] = useState<Array<itemObject>>([]);
+
+  const [categoryExpenses, setCategoryExpenses] = useState<Array<string>>([])
+  const [categoryIncomes, setCategoryIncomes] = useState<Array<string>>([])
+
+  useEffect(() => {
+    let result = getJsonData(JsonDataType.expenses);
+    setCategoryExpenses(result as string[]);
+    result = getJsonData(JsonDataType.incomes);
+    setCategoryIncomes(result as string[]);
+  }, [])
 
   const getLocalStorage = (item: string) => {
     if (item === "expenses") {
@@ -49,8 +58,8 @@ export default function Resume() {
   return (
     <S.ResumePageWrapper>
       <BodyTitle text={"Resume"} />
-      <Table data={expenses} category={expensesCategories.expenses} />
-      <Table data={incomes} category={incomesCategories.incomes} />
+      <Table data={expenses} category={categoryExpenses} />
+      <Table data={incomes} category={categoryIncomes} />
     </S.ResumePageWrapper>
   );
 }

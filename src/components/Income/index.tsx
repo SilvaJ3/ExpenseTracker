@@ -10,7 +10,6 @@ type IncomeProps = {
   id: string;
   onDeleteIncome: (arg: string) => void;
   onEditItemIncome: (arg: string) => void
-
 };
 
 export default function Income({
