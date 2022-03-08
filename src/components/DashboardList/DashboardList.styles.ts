@@ -7,9 +7,14 @@ export const ListWrapper = styled.div`
   border: solid 1px black;
   width: 50vw;
   height: 80vh;
+  background-color: white;
+  box-shadow: 10px 10px 0px 0px gray;
 `
 
 export const ToggleListBtn = styled.button`
   padding: 5px;
   margin: 20px 0;
+  :hover {
+    background-color: rgb(242, 236, 225);
+  }
 `

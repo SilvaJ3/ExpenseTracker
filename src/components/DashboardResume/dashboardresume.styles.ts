@@ -9,4 +9,6 @@ export const ResumeWrapper = styled.div`
   border: solid 1px black;
   width: 30vw;
   height: 80vh;
+  background-color: white;
+  box-shadow: 10px 10px 0px 0px gray;
 `

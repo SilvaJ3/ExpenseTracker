@@ -21,4 +21,14 @@ export const item_action = styled.div`
   align-items: center;
   justify-content: space-evenly;
   width: 40%;
+  button {
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  button svg {
+    pointer-events: none;
+  }
 `

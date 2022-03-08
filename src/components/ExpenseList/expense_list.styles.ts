@@ -22,7 +22,7 @@ export const AddExpenseWrapper = styled.div`
 
 export const AddExpenseBtn = styled.button`
   padding: 5px 10px;
-  border-radius: 15px;
+  border-radius: 5px;
   color: white;
   background-color: black;
   font-weight: bold;
