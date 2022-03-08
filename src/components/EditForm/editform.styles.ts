@@ -5,4 +5,5 @@ export const EditForm = styled.form`
   display: grid;
   grid-template-columns: repeat(2, 50%);
   gap: 4px;
+  position: relative;
 `

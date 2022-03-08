@@ -5,6 +5,7 @@ import IncomeList from '../IncomeList'
 import Modal from '../Modal/Modal';
 import EditForm from "../EditForm";
 import { v4 as uuidv4 } from "uuid";
+import CloseBtn from '../common/CloseBtn/CloseBtn';
 
 interface itemObject {
   id: string;
@@ -21,7 +22,7 @@ export function DashboardList() {
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
 
-  const [toggleList, setToggleList] = useState<boolean>(false);
+  const [toggleList, setToggleList] = useState<boolean>(true);
   const [displayModal, setDisplayModal] = useState<boolean>(false);
 
   /* -------------------------------------------------------------------------- */
@@ -110,6 +111,7 @@ export function DashboardList() {
           {
             displayModal && 
               <Modal>
+                <CloseBtn />
                 <EditForm item={currentItemEdition} handleEditForm={handleEditForm}/>
               </Modal>
           }
@@ -124,7 +126,7 @@ export function DashboardList() {
             displayModal && 
             <Modal>
                 {/* <EditForm /> */}
-              </Modal>
+            </Modal>
           }
         </>
       )

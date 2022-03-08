@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import * as S from "./expensesform.styles";
 import { Input } from '../common/Input/Input.styles';
 import { v4 as uuidv4 } from 'uuid'
+import expenses from "../../data/expenses.json"
 
 type Props = {
   handleSubmitFormExpense: (item: expenseObject) => void
@@ -47,26 +48,13 @@ export default function ExpensesForm ({handleSubmitFormExpense}: Props) {
 
   }
 
-
-  const [categories, setCategories] = useState<Array<string>>([
-    "Autres",
-    "Alimentation",
-    "Assurance",
-    "Banque",
-    "Energie",
-    "Loisirs",
-    "Loyer",
-    "Santé",
-    "Sports"
-  ]);
-
   return (
     <S.AddExpenseForm ref={expense_form} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
       <Input name="description" type="text" placeholder="Description de votre dépense..." ref={description_input}/>
       <Input name="value" type="number" placeholder="42" ref={value_input}/>
       <select ref={category_input} name="category">
         {
-          categories && categories.map((item: string, index: number) => {
+          expenses.expenses && expenses.expenses.map((item: string, index: number) => {
             return (
               <option value={item} key={index}>{item}</option>
             )

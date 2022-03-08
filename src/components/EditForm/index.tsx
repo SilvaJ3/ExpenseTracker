@@ -38,6 +38,7 @@ export default function EditForm(props: any) {
   useEffect(() => {
     description_input.current!.value = props.item.description;
     value_input.current!.value = props.item.value;
+    date_input.current!.value = props.item.date;
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
