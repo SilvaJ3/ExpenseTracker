@@ -7,6 +7,8 @@ import EditForm from "../EditForm";
 import { v4 as uuidv4 } from "uuid";
 import CloseBtn from '../common/CloseBtn/CloseBtn';
 import {useModal} from "../../hooks/useModal"
+import useExpenses from '../../hooks/useExpenses';
+import useIncomes from "../../hooks/useIncomes";
 
 interface itemObject {
   id: string;
@@ -18,47 +20,20 @@ interface itemObject {
 
 export function DashboardList() {
 
-  const [expenses, setExpenses] = useState<Array<itemObject>>([]);
-  const [incomes, setIncomes] = useState<Array<itemObject>>([]);
+  let {expenses, setLocalStorage, getLocalStorage} = useExpenses();
+  const [expensesData, setExpensesData] = useState<Array<itemObject>>([]);
+  const {incomes, setIncomes} = useIncomes();
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
 
   const [toggleList, setToggleList] = useState<boolean>(true);
   const {displayModal, setDisplayModal} = useModal();
 
-  const getLocalStorage = (item: string) => {
-    if (item === "expenses") {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setExpenses(parseStore);
-        }
-      }
-    } else {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setIncomes(parseStore)
-        }
-      }
-    }
-  }
-
   useEffect(() => {
-    getLocalStorage("expenses");
-    getLocalStorage("incomes");
-  }, []);
-
-  const updateLocalStorage = () => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-    localStorage.setItem("incomes", JSON.stringify(incomes));
-  }
-
-  useEffect(() => {
-    updateLocalStorage();
-  }, [expenses, incomes]);
+    console.log(getLocalStorage());
+    
+    // setExpensesData(getLocalStorage());
+  }, [])
 
   const handleSubmitFormExpense = (item: itemObject) => {
     const expense_content: itemObject = {
@@ -68,8 +43,8 @@ export function DashboardList() {
       category: item.category,
       date: item.date,
     };
-
-    setExpenses([...expenses, expense_content]);
+    setLocalStorage(expense_content);
+    // setExpensesData(getLocalStorage());
   };
 
   const handleSubmitFormIncome = (item: itemObject) => {
@@ -86,7 +61,8 @@ export function DashboardList() {
 
   const onDeleteItem = (id: string): void => {
     const filteredExpenses = expenses.filter((item) => item.id != id);
-    setExpenses(filteredExpenses);
+    // setExpenses(filteredExpenses);
+    expenses = filteredExpenses;
   };
 
   const onEditItem = (id: string): void => {
@@ -109,7 +85,7 @@ export function DashboardList() {
   const handleEditForm = (editedItem: itemObject): void => {
     const filteredExpenses = expenses.filter((item: itemObject) => item.id !== editedItem.id);
     filteredExpenses.push(editedItem);
-    setExpenses(filteredExpenses);
+    // setExpenses(filteredExpenses);
     setDisplayModal(false);
   };
 
@@ -125,7 +101,7 @@ export function DashboardList() {
       return (
         <>
           <S.ToggleListBtn onClick={(): void => setToggleList(!toggleList)}>Afficher les Recettes</S.ToggleListBtn>
-          <ExpenseList expenses={expenses} handleSubmitFormExpense={handleSubmitFormExpense} onDeleteItem={onDeleteItem} onEditItem={onEditItem}/>
+          <ExpenseList expenses={expensesData} handleSubmitFormExpense={handleSubmitFormExpense} onDeleteItem={onDeleteItem} onEditItem={onEditItem}/>
           {
             displayModal && 
               <Modal>

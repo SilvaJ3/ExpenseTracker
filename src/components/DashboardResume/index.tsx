@@ -3,6 +3,9 @@ import * as S from "./dashboardresume.styles"
 import BodyTitle from '../common/BodyTitle/bodyTitle'
 import Text from "../common/Text/Text"
 import DashboardCharts from "../DashboardCharts/index"
+import _ from "lodash"
+import useExpenses from '../../hooks/useExpenses'
+import useIncomes from '../../hooks/useIncomes'
 
 type itemObject = {
   id: string,
@@ -15,48 +18,25 @@ type itemObject = {
 export default function DashboardResume () {
 
   const [expenseTotal, setExpenseTotal] = useState<number>(0);
+  const {expenses} = useExpenses();
+  const {incomes, setIncomes} = useIncomes();
   const [incomeTotal, setIncomeTotal] = useState<number>(0);
 
   let value = 0;
 
-  const getLocalStorage = (item: string) => {
-    if (item === "expenses") {
-      if (localStorage.getItem("incomes")) {
-        const localStore = localStorage.getItem("incomes");
-        const parseStore = JSON.parse(localStore!);
-        
-        if (parseStore[0]) {
-          parseStore.forEach( (element: itemObject) => {
-            value = value + element.value;
-          });
-          
-          setIncomeTotal(value);
-          value = 0;
-        }
-      }
-    } else {
-      if (localStorage.getItem("expenses")) {
-        const localStore = localStorage.getItem("expenses");
-        const parseStore = JSON.parse(localStore!);
-        
-        if (parseStore[0]) {
-          parseStore.forEach( (element: itemObject) => {
-            value = value + element.value;
-          });
-          
-          setExpenseTotal(value);
-          value = 0;
-        }
-      }
-    }
+  const getDataExpensesIncomes = () => {
+    const totalExpenses = _.sumBy(expenses, function(item) {return item.value});
+    setExpenseTotal(totalExpenses);
+
+    const totalIncomes = _.sumBy(incomes, function(item) {return item.value});
+    setIncomeTotal(totalIncomes);
   }
 
   useEffect(() => {
-    
-    getLocalStorage("expenses")
-    getLocalStorage("incomes")
 
-  }, [])
+    getDataExpensesIncomes();
+
+  }, [expenses, incomes])
 
   return (
     <S.ResumeWrapper>

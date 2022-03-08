@@ -12,10 +12,16 @@ type expenseObject = {
   date: string;
 };
 
-
 export function ExpenseList(props: any) {
 
   const {displayForm, setDisplayForm} = useForm();
+  const [expensesData, setExpensesData] = useState<Array<expenseObject>>([]);
+
+  useEffect(() => {
+    console.log(props);
+    
+    setExpensesData(props.expenses)
+  }, [props.expenses])
 
   return (
     <S.ExpenseWrapper>
@@ -26,8 +32,8 @@ export function ExpenseList(props: any) {
         {displayForm && <ExpensesForm handleSubmitFormExpense={props.handleSubmitFormExpense} />}
       </S.AddExpenseWrapper>
       <S.ExpenseListWrapper>
-        {props.expenses &&
-          props.expenses.map((item: expenseObject, index: number) => {
+        {expensesData &&
+          expensesData.map((item: expenseObject, index: number) => {
             return (
               <Expense
                 description={item.description}

@@ -22,6 +22,7 @@ export const Category_List_item = styled.li`
 
 export const TableElement = styled.table`
   border: solid 1px black;
+  max-height: 30vh;
 `
 
 export const TableHead = styled.thead`
@@ -38,5 +39,9 @@ export const TableRow_Th = styled.th`
 
 export const TableBody = styled.tbody`
   border: solid 1px black;
+  overflow-y: scroll;
+  :-webkit-scrollbar {
+    display: hidden;
+  }
 `
 
