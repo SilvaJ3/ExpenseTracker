@@ -27,7 +27,7 @@ export default function Resume() {
   }, [])
 
   const getLocalStorage = (item: string) => {
-    if (item === "expenses") {
+    if (item == "expenses") {
       if (localStorage.getItem(item)) {
         const localStore = localStorage.getItem(item);
         const parseStore = JSON.parse(localStore!);
@@ -50,10 +50,10 @@ export default function Resume() {
   /*                  useEffect pour récupérer le localStorage                  */
   /* -------------------------------------------------------------------------- */
 
-  useEffect(() => {
-    getLocalStorage("expenses");
-    getLocalStorage("incomes");
-  }, []);
+  // useEffect(() => {
+  //   getLocalStorage("expenses");
+  //   getLocalStorage("incomes");
+  // }, []);
 
   return (
     <S.ResumePageWrapper>

@@ -6,7 +6,7 @@ export const Stats_Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 50px;
+  padding: 50px;
 `
 
 export const ToggleBtnWrapper = styled.div`

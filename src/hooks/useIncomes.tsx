@@ -12,26 +12,26 @@ export default function useIncomes() {
 
   const [incomes, setIncomes] = useState<Array<itemObject>>([]);
 
-  const getLocalStorage = () => {
-    if (localStorage.getItem("incomes")) {
-      const localStore = localStorage.getItem("incomes");
-      const parseStore = JSON.parse(localStore!);
-      if (parseStore[0]) {
-        setIncomes(parseStore);
-      }
-    }
-  }
+  // const getLocalStorage = () => {
+  //   if (localStorage.getItem("incomes")) {
+  //     const localStore = localStorage.getItem("incomes");
+  //     const parseStore = JSON.parse(localStore!);
+  //     if (parseStore[0]) {
+  //       setIncomes(parseStore);
+  //     }
+  //   }
+  // }
   
-  useEffect(() => {
-    getLocalStorage();
-  }, [localStorage.getItem("incomes")?.length])
+  // useEffect(() => {
+  //   getLocalStorage();
+  // }, [localStorage.getItem("incomes")?.length])
 
-  const updateLocalStorage = () => {
-    localStorage.setItem("incomes", JSON.stringify(incomes));
-  }
-  useEffect(() => {
-    updateLocalStorage();
-  }, [incomes])
+  // const updateLocalStorage = () => {
+  //   localStorage.setItem("incomes", JSON.stringify(incomes));
+  // }
+  // useEffect(() => {
+  //   updateLocalStorage();
+  // }, [incomes])
 
   return {
     incomes, setIncomes

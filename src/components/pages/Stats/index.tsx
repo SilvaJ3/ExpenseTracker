@@ -22,7 +22,7 @@ export default function Stats() {
   /* -------------------------------------------------------------------------- */
 
   const getLocalStorage = (item: string): void => {
-    if (item === "expenses") {
+    if (item == "expenses") {
       if (localStorage.getItem(item)) {
         const localStore = localStorage.getItem(item);
         const parseStore = JSON.parse(localStore!);
@@ -41,10 +41,10 @@ export default function Stats() {
     }
   }
 
-  useEffect(() => {
-    getLocalStorage("expenses")
-    getLocalStorage("incomes")
-  }, []);
+  // useEffect(() => {
+  //   getLocalStorage("expenses")
+  //   getLocalStorage("incomes")
+  // }, []);
 
   function displayStats() {
     if (toggleStats) {

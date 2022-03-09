@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+
 
 interface itemObject {
   id: string;
@@ -10,27 +10,25 @@ interface itemObject {
 
 export default function useExpenses() {
 
-  // let expenses: itemObject[] = [];
-  const [expenses, setExpenses] = useState<Array<itemObject>>([]);
+  let expenses: itemObject[] = [];
 
   const getLocalStorage = () => {
     if (localStorage.getItem("expenses")) {
       const localStore = localStorage.getItem("expenses");
       const parseStore = JSON.parse(localStore!);
-      if (parseStore[0]) {
-        setExpenses(parseStore)
-        return expenses
-      }
+      expenses = parseStore;
+      console.log(expenses);
+      return expenses
     }
   }
 
   const setLocalStorage = (item: itemObject) => {
-    console.log(item);
-    setExpenses([...expenses, item])
-    console.log("expenses : " , expenses);
     
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-    // return getLocalStorage();
+    debugger; let newData = expenses.push(item);
+    console.log("expenses : " , newData);
+    
+    localStorage.setItem("expenses", JSON.stringify(newData));
+    return getLocalStorage();
   }
 
   return {

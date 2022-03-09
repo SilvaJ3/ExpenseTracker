@@ -21,7 +21,6 @@ interface itemObject {
 export function DashboardList() {
 
   let {expenses, setLocalStorage, getLocalStorage} = useExpenses();
-  const [expensesData, setExpensesData] = useState<Array<itemObject>>([]);
   const {incomes, setIncomes} = useIncomes();
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
@@ -30,7 +29,7 @@ export function DashboardList() {
   const {displayModal, setDisplayModal} = useModal();
 
   useEffect(() => {
-    console.log(getLocalStorage());
+    // console.log(getLocalStorage());
     
     // setExpensesData(getLocalStorage());
   }, [])
@@ -43,6 +42,8 @@ export function DashboardList() {
       category: item.category,
       date: item.date,
     };
+    console.log(expense_content);
+    
     setLocalStorage(expense_content);
     // setExpensesData(getLocalStorage());
   };
@@ -101,7 +102,7 @@ export function DashboardList() {
       return (
         <>
           <S.ToggleListBtn onClick={(): void => setToggleList(!toggleList)}>Afficher les Recettes</S.ToggleListBtn>
-          <ExpenseList expenses={expensesData} handleSubmitFormExpense={handleSubmitFormExpense} onDeleteItem={onDeleteItem} onEditItem={onEditItem}/>
+          <ExpenseList expenses={expenses} handleSubmitFormExpense={handleSubmitFormExpense} onDeleteItem={onDeleteItem} onEditItem={onEditItem}/>
           {
             displayModal && 
               <Modal>
