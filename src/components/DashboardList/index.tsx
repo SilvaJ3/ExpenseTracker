@@ -7,8 +7,8 @@ import EditForm from "../EditForm";
 import { v4 as uuidv4 } from "uuid";
 import CloseBtn from '../common/CloseBtn/CloseBtn';
 import {useModal} from "../../hooks/useModal"
-import useExpenses from '../../hooks/useExpenses';
-import useIncomes from "../../hooks/useIncomes";
+import expensesSubject, { ExpensesObserver } from "../../hooks/useExpensesObserver"
+import incomesSubject, { IncomesObserver } from "../../hooks/useIncomesObserver"
 
 interface itemObject {
   id: string;
@@ -20,18 +20,42 @@ interface itemObject {
 
 export function DashboardList() {
 
-  let {expenses, setLocalStorage, getLocalStorage} = useExpenses();
-  const {incomes, setIncomes} = useIncomes();
+  const [expenses, setExpenses] = useState<Array<itemObject>>([]);
+  const [incomes, setIncomes] = useState<Array<itemObject>>([]);
   const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
 
   const [toggleList, setToggleList] = useState<boolean>(true);
   const {displayModal, setDisplayModal} = useModal();
 
+  const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
+    setExpenses([...expenses, expense]);
+    expensesSubject.updateExpenses(expense);
+  }
+
+  const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
+    setIncomes([...incomes, income]);
+    incomesSubject.updateIncomes(income);
+  }
+
   useEffect(() => {
-    // console.log(getLocalStorage());
+    // On initialise le state en récupérant la data depuis le localstorage
+    setExpenses(expensesSubject.getLocalStorageInit());
     
-    // setExpensesData(getLocalStorage());
+    // Au montage du component, on subscribe
+    // expensesSubject.attach(onExpensesUpdated);
+    // // Au démontage du component, on unsubscribe
+    // return () => expensesSubject.detach(onExpensesUpdated);
+  }, [])
+  
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    setIncomes(incomesSubject.getLocalStorageInit());
+    
+    // Au montage du component, on subscribe
+    // incomesSubject.attach(onIncomesUpdated);
+    // // Au démontage du component, on unsubscribe
+    // return () => incomesSubject.detach(onIncomesUpdated);
   }, [])
 
   const handleSubmitFormExpense = (item: itemObject) => {
@@ -42,10 +66,7 @@ export function DashboardList() {
       category: item.category,
       date: item.date,
     };
-    console.log(expense_content);
-    
-    setLocalStorage(expense_content);
-    // setExpensesData(getLocalStorage());
+    onExpensesUpdated(expense_content);
   };
 
   const handleSubmitFormIncome = (item: itemObject) => {
@@ -57,13 +78,13 @@ export function DashboardList() {
       date: item.date
     }
     
-    setIncomes([...incomes, income_content]);
+    onIncomesUpdated(income_content);
   }
 
   const onDeleteItem = (id: string): void => {
     const filteredExpenses = expenses.filter((item) => item.id != id);
-    // setExpenses(filteredExpenses);
-    expenses = filteredExpenses;
+    setExpenses(filteredExpenses);
+    // expenses = filteredExpenses;
   };
 
   const onEditItem = (id: string): void => {

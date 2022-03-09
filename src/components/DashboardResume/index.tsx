@@ -4,8 +4,9 @@ import BodyTitle from '../common/BodyTitle/bodyTitle'
 import Text from "../common/Text/Text"
 import DashboardCharts from "../DashboardCharts/index"
 import _ from "lodash"
-import useExpenses from '../../hooks/useExpenses'
 import useIncomes from '../../hooks/useIncomes'
+import expensesSubject, { ExpensesObserver } from "../../hooks/useExpensesObserver";
+import incomesSubject, { IncomesObserver } from '../../hooks/useIncomesObserver'
 
 type itemObject = {
   id: string,
@@ -18,9 +19,37 @@ type itemObject = {
 export default function DashboardResume () {
 
   const [expenseTotal, setExpenseTotal] = useState<number>(0);
-  const {expenses} = useExpenses();
-  const {incomes, setIncomes} = useIncomes();
+  const [expenses, setExpenses] = useState<Array<itemObject>>([]);
+  const [incomes, setIncomes] = useState<Array<itemObject>>([]);
   const [incomeTotal, setIncomeTotal] = useState<number>(0);
+
+  const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
+    setExpenses([...expenses, expense]);
+  }
+
+  const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
+    setIncomes([...incomes, income])
+  }
+
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    setExpenses(expensesSubject.getLocalStorageInit());
+
+    // Au montage du component, on subscribe
+    expensesSubject.attach(onExpensesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => expensesSubject.detach(onExpensesUpdated);
+  }, [])
+
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    setIncomes(incomesSubject.getLocalStorageInit());
+    
+    // Au montage du component, on subscribe
+    incomesSubject.attach(onIncomesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => incomesSubject.detach(onIncomesUpdated);
+  }, [])
 
   let value = 0;
 

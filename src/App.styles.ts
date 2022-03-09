@@ -4,6 +4,7 @@ export const WrapperRouterContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  background-color: rgb(204, 227, 218);
 `
 
 export const NavigationMenu = styled.nav`

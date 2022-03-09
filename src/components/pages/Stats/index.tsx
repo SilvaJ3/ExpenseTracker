@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import * as S from "./stats.styles";
 import BodyTitle from "../../common/BodyTitle/bodyTitle";
 import StatsContent from "../../StatsContent";
+import expensesSubject, { ExpensesObserver } from "../../../hooks/useExpensesObserver";
+import incomesSubject, { IncomesObserver } from "../../../hooks/useIncomesObserver";
+
 
 interface itemObject {
   id: string;
@@ -17,34 +20,34 @@ export default function Stats() {
   const [expenses, setExpenses] = useState<Array<itemObject>>([]);
   const [incomes, setIncomes] = useState<Array<itemObject>>([]);
 
-  /* -------------------------------------------------------------------------- */
-  /*                  useEffect pour récupérer le localStorage                  */
-  /* -------------------------------------------------------------------------- */
-
-  const getLocalStorage = (item: string): void => {
-    if (item == "expenses") {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setExpenses(parseStore);
-        }
-      }
-    } else {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setIncomes(parseStore);
-        }
-      }
-    }
+  const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
+    setExpenses([...expenses, expense]);
   }
 
-  // useEffect(() => {
-  //   getLocalStorage("expenses")
-  //   getLocalStorage("incomes")
-  // }, []);
+  const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
+    setIncomes([...incomes, income]);
+  }
+
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    setExpenses(expensesSubject.getLocalStorageInit());
+
+    // Au montage du component, on subscribe
+    expensesSubject.attach(onExpensesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => expensesSubject.detach(onExpensesUpdated);
+  }, [])
+
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    setIncomes(incomesSubject.getLocalStorageInit());
+
+    // Au montage du component, on subscribe
+    incomesSubject.attach(onIncomesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => incomesSubject.detach(onIncomesUpdated);
+  }, [])
+
 
   function displayStats() {
     if (toggleStats) {
