@@ -7,6 +7,7 @@ type ColorItem = {
 export const StatsDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 20px;
 `
 
 export const StatsDetailsList = styled.ul`

@@ -8,6 +8,9 @@ export const ExpenseModalEdition = styled.div`
   background-color: white;
   height: 170px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  @media (max-width: 1024px) {
+    top: calc(95%);
+  }
 `
 
 export const CloseModalBtn = styled.div`

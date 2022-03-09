@@ -33,6 +33,24 @@ class ExpenseSubject {
     this.notify(expense);
   }
 
+  public editExpenses(expense: itemObject) {
+    let localStore = this.getLocalStorage();
+    let newData = localStore.filter((item: itemObject) => item.id !== expense.id);
+    newData.push(expense);
+    console.log(newData);
+    const expenseStringify = JSON.stringify(newData);
+    localStorage.setItem("expenses", expenseStringify);
+    this.notify(expense);
+  }
+
+  public deleteExpenses(expense: itemObject) {
+    let localStore = this.getLocalStorage();
+    let newData = localStore.filter((item: itemObject) => item.id !== expense.id);
+    const expenseStringify = JSON.stringify(newData);
+    localStorage.setItem("expenses", expenseStringify);
+    this.notify(expense);
+  }
+
   // La récupération de notre data depuis le localStorage
   private getLocalStorage() {
     const localStore = localStorage.getItem("expenses");

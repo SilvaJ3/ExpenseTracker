@@ -54,6 +54,8 @@ export default function DashboardResume () {
   let value = 0;
 
   const getDataExpensesIncomes = () => {
+    console.log(expenses);
+    
     const totalExpenses = _.sumBy(expenses, function(item) {return item.value});
     setExpenseTotal(totalExpenses);
 
@@ -62,7 +64,8 @@ export default function DashboardResume () {
   }
 
   useEffect(() => {
-
+    setExpenses(expensesSubject.getLocalStorageInit());
+    setIncomes(incomesSubject.getLocalStorageInit());
     getDataExpensesIncomes();
 
   }, [expenses, incomes])

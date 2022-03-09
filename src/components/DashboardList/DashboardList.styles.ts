@@ -9,6 +9,9 @@ export const ListWrapper = styled.div`
   height: 80vh;
   background-color: white;
   box-shadow: 10px 10px 0px 0px gray;
+  @media (max-width: 1024px) {
+    width: 80vw
+  }
 `
 
 export const ToggleListBtn = styled.button`

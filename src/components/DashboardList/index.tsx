@@ -33,29 +33,48 @@ export function DashboardList() {
     expensesSubject.updateExpenses(expense);
   }
 
+  const onExpensesEdited: ExpensesObserver = (expense: itemObject) => {
+    let expensesToFilter = expenses;
+    let filteredExpenses = expensesToFilter.filter((item: itemObject) => item.id !== expense.id);
+    filteredExpenses.push(expense);
+    
+    setExpenses(filteredExpenses);
+    expensesSubject.editExpenses(expense);
+  }
+
+  const onExpensesDeleted: ExpensesObserver = (expense: itemObject) => {
+    let expensesToFilter = expenses;
+    let filteredExpenses = expensesToFilter.filter((item: itemObject) => item.id !== expense.id);
+    setExpenses(filteredExpenses);
+    expensesSubject.deleteExpenses(expense);
+  }
+
   const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
     setIncomes([...incomes, income]);
     incomesSubject.updateIncomes(income);
   }
 
+  const onIncomesDeleted: IncomesObserver = (income: itemObject) => {
+    let incomesToFilter = incomes;
+    let filteredIncomes = incomesToFilter.filter((item: itemObject) => item.id !== income.id);
+    setIncomes(filteredIncomes);
+    incomesSubject.deleteIncomes(income);
+  }
+
+
+  const onIncomesEdited: IncomesObserver = (income: itemObject) => {
+    let incomesToFilter = incomes;
+    let filteredIncomes = incomesToFilter.filter((item: itemObject) => item.id !== income.id);
+    filteredIncomes.push(income);
+    
+    setIncomes(filteredIncomes);
+    expensesSubject.editExpenses(income);
+  }
+
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
     setExpenses(expensesSubject.getLocalStorageInit());
-    
-    // Au montage du component, on subscribe
-    // expensesSubject.attach(onExpensesUpdated);
-    // // Au démontage du component, on unsubscribe
-    // return () => expensesSubject.detach(onExpensesUpdated);
-  }, [])
-  
-  useEffect(() => {
-    // On initialise le state en récupérant la data depuis le localstorage
     setIncomes(incomesSubject.getLocalStorageInit());
-    
-    // Au montage du component, on subscribe
-    // incomesSubject.attach(onIncomesUpdated);
-    // // Au démontage du component, on unsubscribe
-    // return () => incomesSubject.detach(onIncomesUpdated);
   }, [])
 
   const handleSubmitFormExpense = (item: itemObject) => {
@@ -82,9 +101,8 @@ export function DashboardList() {
   }
 
   const onDeleteItem = (id: string): void => {
-    const filteredExpenses = expenses.filter((item) => item.id != id);
-    setExpenses(filteredExpenses);
-    // expenses = filteredExpenses;
+    const expenseToDelete = expenses.filter((item) => item.id === id);
+    onExpensesDeleted(expenseToDelete[0])
   };
 
   const onEditItem = (id: string): void => {
@@ -105,16 +123,12 @@ export function DashboardList() {
   };
 
   const handleEditForm = (editedItem: itemObject): void => {
-    const filteredExpenses = expenses.filter((item: itemObject) => item.id !== editedItem.id);
-    filteredExpenses.push(editedItem);
-    // setExpenses(filteredExpenses);
+    onExpensesEdited(editedItem)
     setDisplayModal(false);
   };
 
   const handleEditFormIncome = (editedItem: itemObject): void => {
-    const filteredIncomes = incomes.filter((item: itemObject) => item.id !== editedItem.id);
-    filteredIncomes.push(editedItem);
-    setIncomes(filteredIncomes);
+    onIncomesEdited(editedItem);
     setDisplayModal(false);
   }
 

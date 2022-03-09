@@ -33,6 +33,23 @@ class IncomeSubject {
     this.notify(income);
   }
 
+  public editIncomes(income: itemObject) {
+    let localStore = this.getLocalStorage();
+    let newData = localStore.filter((item: itemObject) => item.id !== income.id);
+    newData.push(income);
+    const incomeStringify = JSON.stringify(newData);
+    localStorage.setItem("incomes", incomeStringify);
+    this.notify(income);
+  }
+
+  public deleteIncomes(income: itemObject) {
+    let localStore = this.getLocalStorage();
+    let newData = localStore.filter((item: itemObject) => item.id !== income.id);
+    const incomeStringify = JSON.stringify(newData);
+    localStorage.setItem("incomes", incomeStringify);
+    this.notify(income);
+  }
+
   // La récupération de notre data depuis le localStorage
   private getLocalStorage() {
     const localStore = localStorage.getItem("incomes");

@@ -5,7 +5,7 @@ export const Stats_Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 50px;
 `
 
@@ -14,6 +14,15 @@ export const ToggleBtnWrapper = styled.div`
 `
 
 export const ToggleBtn = styled.button`
+  font-size: 20px;
+  margin: 20px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: solid 1px black;
+  :hover {
+    background-color: rgb(242, 236, 225);
+  }
 `
 
 export const StatsContentWrapper = styled.div`

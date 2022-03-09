@@ -30,10 +30,10 @@ export default function Chart (props: iChartProps) {
     let result = _.chain(props.datainfo)
       .groupBy('category')
       .map((item: any | itemObject, category) => {
-          return {
-              name: category, 
-              value: _.sumBy(item, 'value')
-          };
+        return {
+            name: category, 
+            value: _.sumBy(item, 'value')
+        };
       })
       .value();
     setData(result);
@@ -56,13 +56,13 @@ export default function Chart (props: iChartProps) {
       {
         data && 
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={400} height={400}>
+          <PieChart width={700} height={700}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
               labelLine={false}
-              outerRadius={80}
+              outerRadius={200}
               fill="#8884d8"
               dataKey="value"
             >

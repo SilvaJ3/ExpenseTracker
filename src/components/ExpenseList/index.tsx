@@ -18,8 +18,6 @@ export function ExpenseList(props: any) {
   const [expensesData, setExpensesData] = useState<Array<expenseObject>>([]);
 
   useEffect(() => {
-    console.log(props);
-    
     setExpensesData(props.expenses)
   }, [props.expenses])
 

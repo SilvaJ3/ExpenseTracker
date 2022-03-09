@@ -7,4 +7,9 @@ export const Dashboard_Wrapper = styled.div`
   padding: 5%;
   height: 100%;
   background-color: rgb(204, 227, 218);
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
 `
