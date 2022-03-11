@@ -31,7 +31,7 @@ export default function Resume() {
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    setExpenses(expensesSubject.getLocalStorageInit());
+    // setExpenses(expensesSubject.getLocalStorageInit());
 
     // Au montage du component, on subscribe
     expensesSubject.attach(onExpensesUpdated);
@@ -41,7 +41,7 @@ export default function Resume() {
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    setIncomes(incomesSubject.getLocalStorageInit());
+    // setIncomes(incomesSubject.getLocalStorageInit());
 
     // Au montage du component, on subscribe
     incomesSubject.attach(onIncomesUpdated);

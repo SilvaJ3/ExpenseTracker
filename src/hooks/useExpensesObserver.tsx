@@ -27,20 +27,22 @@ class ExpenseSubject {
   // La function de mise à jour de notre donnée expenses qui enclenche également la notification
   public updateExpenses(expense: itemObject) {
     let localStore = this.getLocalStorage();
-    localStore.push(expense);
-    const expenseStringify = JSON.stringify(localStore)
-    localStorage.setItem("expenses", expenseStringify)
-    this.notify(expense);
+    if (!localStore.some((item: itemObject) => item.id === expense.id)) {
+      
+      localStore.push(expense);
+      const expenseStringify = JSON.stringify(localStore)
+      localStorage.setItem("expenses", expenseStringify)
+      this.notify(expense);
+      
+    }
   }
 
   public editExpenses(expense: itemObject) {
     let localStore = this.getLocalStorage();
     let newData = localStore.filter((item: itemObject) => item.id !== expense.id);
     newData.push(expense);
-    console.log(newData);
     const expenseStringify = JSON.stringify(newData);
     localStorage.setItem("expenses", expenseStringify);
-    this.notify(expense);
   }
 
   public deleteExpenses(expense: itemObject) {
@@ -48,7 +50,6 @@ class ExpenseSubject {
     let newData = localStore.filter((item: itemObject) => item.id !== expense.id);
     const expenseStringify = JSON.stringify(newData);
     localStorage.setItem("expenses", expenseStringify);
-    this.notify(expense);
   }
 
   // La récupération de notre data depuis le localStorage
@@ -64,7 +65,10 @@ class ExpenseSubject {
 
   // Function de notification 
   private notify(expense: itemObject) {
-    this.observers.forEach(observer => observer(expense));
+    
+    this.observers.forEach(observer => {
+      observer(expense)
+    });
   }
 
 }

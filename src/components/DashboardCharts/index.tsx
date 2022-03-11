@@ -20,14 +20,15 @@ export default function DashboardCharts (datainfo: any) {
 
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="50%">
         <PieChart width={400} height={400}>
           <Pie
             data={data}
             cx="50%"
             cy="50%"
             labelLine={false}
-            outerRadius={80}
+            outerRadius={130}
+            innerRadius={60}
             fill="#8884d8"
             dataKey="value"
           >

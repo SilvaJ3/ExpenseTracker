@@ -29,9 +29,13 @@ export function DashboardList() {
   const {displayModal, setDisplayModal} = useModal();
 
   const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
+    
     setExpenses([...expenses, expense]);
+    console.log(expenses);
+    
     expensesSubject.updateExpenses(expense);
   }
+  
 
   const onExpensesEdited: ExpensesObserver = (expense: itemObject) => {
     let expensesToFilter = expenses;
@@ -72,10 +76,18 @@ export function DashboardList() {
   }
 
   useEffect(() => {
+    expensesSubject.attach(onExpensesUpdated);
+
     // On initialise le state en récupérant la data depuis le localstorage
-    setExpenses(expensesSubject.getLocalStorageInit());
-    setIncomes(incomesSubject.getLocalStorageInit());
-  }, [])
+    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
+      
+      setExpenses(expensesSubject.getLocalStorageInit());
+    }
+    // setIncomes(incomesSubject.getLocalStorageInit());
+    console.log("list : " , expenses);
+
+    return () => expensesSubject.detach(onExpensesUpdated)
+  }, [expenses])
 
   const handleSubmitFormExpense = (item: itemObject) => {
     const expense_content: itemObject = {

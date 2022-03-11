@@ -8,6 +8,9 @@ export const StatsDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
+  @media(max-width: 1024px) {
+    align-items: center;
+  }
 `
 
 export const StatsDetailsList = styled.ul`
@@ -15,6 +18,7 @@ export const StatsDetailsList = styled.ul`
   border: solid 1px black;
   border-radius: 5px;
   padding-left: 0;
+  min-width: 300px;
 `
 
 export const StatsDetailsListItem = styled.li<ColorItem>`
