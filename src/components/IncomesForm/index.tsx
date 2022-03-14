@@ -34,10 +34,10 @@ export default function IncomesForm({ handleSubmitFormIncome }: Props) {
     e.preventDefault();
 
     if (
-      description_input.current!.value != "" &&
-      value_input.current!.value != "" &&
-      category_input.current!.value != "" &&
-      date_input.current!.value != ""
+      description_input.current!.value !== "" &&
+      value_input.current!.value !== "" &&
+      category_input.current!.value !== "" &&
+      date_input.current!.value !== ""
     ) {
       const item = {
         id: uuidv4(),
@@ -61,25 +61,31 @@ export default function IncomesForm({ handleSubmitFormIncome }: Props) {
       ref={income_form}
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
     >
-      <Input
-        name="description"
-        type="text"
-        placeholder="Description de votre recette..."
-        ref={description_input}
-      />
-      <Input name="value" type="number" placeholder="42" ref={value_input} />
-      <select ref={category_input} name="category">
-        {category &&
-          category.map((item: string, index: number) => {
-            return (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            );
-          })}
-      </select>
-      <Input name="date" type="date" ref={date_input} />
-      <button type="submit">Valider</button>
+      <S.Form_block>
+        <Input
+          name="description"
+          type="text"
+          placeholder="Description de votre recette..."
+          ref={description_input}
+          />
+        <Input name="value" type="number" placeholder="42" ref={value_input} />
+      </S.Form_block>
+      <S.Form_block>
+        <select ref={category_input} name="category">
+          {category &&
+            category.map((item: string, index: number) => {
+              return (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              );
+            })}
+        </select>
+        <Input name="date" type="date" ref={date_input} />
+      </S.Form_block>
+      <S.Form_confirm_block>
+        <S.confirm_Btn type="submit">Valider</S.confirm_Btn>
+      </S.Form_confirm_block>
     </S.AddIncomeForm>
   );
 }

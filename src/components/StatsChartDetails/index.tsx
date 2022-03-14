@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./statschartsdetails.styles";
 import _ from "lodash";
 import Text from "../common/Text/Text";
-import useColors from "../../hooks/useColors";
+import getJsonData, { JsonDataType } from "../../hooks/getJsonData"
 
 interface itemObject {
   id: string;
@@ -22,7 +22,7 @@ interface dataResume {
 }
 
 export default function StatsChartDetails(props: iChartProps) {
-  const { COLORS } = useColors();
+  const [colors, setColors] = useState<Array<string>>([]);
 
   const [CategorySum, setCategorySum] = useState<Array<dataResume>>([]);
 
@@ -38,6 +38,10 @@ export default function StatsChartDetails(props: iChartProps) {
       .value();
 
     setCategorySum(result);
+
+    let color = getJsonData(JsonDataType.colors);
+    setColors(color as string[]);
+
   }, [props.datainfo]);
 
   return (
@@ -45,7 +49,7 @@ export default function StatsChartDetails(props: iChartProps) {
       <S.StatsDetailsList>
         {CategorySum &&
           CategorySum.map((item: dataResume, index) => (
-            <S.StatsDetailsListItem key={item.name} bgColor={COLORS[index]}>
+            <S.StatsDetailsListItem key={item.name} bgColor={colors[index]}>
               <Text text={`${item.name} : ${item.value} €`} />
             </S.StatsDetailsListItem>
           ))}

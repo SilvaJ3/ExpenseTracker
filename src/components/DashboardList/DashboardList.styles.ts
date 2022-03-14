@@ -5,9 +5,9 @@ export const ListWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   border: solid 1px black;
-  width: 50vw;
+  width: 35vw;
   height: 80vh;
-  background-color: white;
+  background-color: #E6E6E6;
   box-shadow: 10px 10px 0px 0px gray;
   @media (max-width: 1024px) {
     width: 80vw

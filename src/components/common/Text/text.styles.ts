@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
-export const Text = styled.p`
-  
+type TextPropsStyle = {
+  color?: string,
+}
+
+export const Text = styled.p<TextPropsStyle>`
+  color: ${props => (props.color)};
 `

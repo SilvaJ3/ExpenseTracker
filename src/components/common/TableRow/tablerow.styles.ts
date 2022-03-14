@@ -1,9 +1,11 @@
 import styled from "styled-components"
 
 export const TableRow = styled.tr`
-  border: solid 1px black;
+  background-color: white;
 `
 
 export const TableRow_Td = styled.td`
-  border: solid 1px black;
+  text-align: center;
+  background-color: white;
+  padding: 20px 0;
 `

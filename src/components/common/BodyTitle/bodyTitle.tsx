@@ -1,4 +1,3 @@
-import React from 'react'
 import * as S from "./bodytitle.styles"
 
 type TextProps = {
@@ -6,6 +5,7 @@ type TextProps = {
 }
 
 export default function BodyTitle ({text}: TextProps) {
+
   return (
     <S.BodyTitle>
       { text }

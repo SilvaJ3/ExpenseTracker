@@ -22,20 +22,29 @@ export function DashboardList() {
 
   const [expenses, setExpenses] = useState<Array<itemObject>>([]);
   const [incomes, setIncomes] = useState<Array<itemObject>>([]);
-  const [displayForm, setDisplayForm] = useState<boolean>(false);
   const [currentItemEdition, setCurrentItemEdition] = useState<itemObject>();
-
   const [toggleList, setToggleList] = useState<boolean>(true);
   const {displayModal, setDisplayModal} = useModal();
 
+  /* -------------------------------------------------------------------------- */
+  /*                                  Expenses                                  */
+  /* -------------------------------------------------------------------------- */
+
+  useEffect(() => {
+    expensesSubject.attach(onExpensesUpdated);
+
+    // On initialise le state en récupérant la data depuis le localstorage
+    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
+      setExpenses(expensesSubject.getLocalStorageInit());
+    }
+
+    return () => expensesSubject.detach(onExpensesUpdated)
+  }, [expenses]);
+
   const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
-    
     setExpenses([...expenses, expense]);
-    console.log(expenses);
-    
     expensesSubject.updateExpenses(expense);
   }
-  
 
   const onExpensesEdited: ExpensesObserver = (expense: itemObject) => {
     let expensesToFilter = expenses;
@@ -52,6 +61,21 @@ export function DashboardList() {
     setExpenses(filteredExpenses);
     expensesSubject.deleteExpenses(expense);
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                   Incomes                                  */
+  /* -------------------------------------------------------------------------- */
+
+  useEffect(() => {
+    incomesSubject.attach(onIncomesUpdated);
+
+    // On initialise le state en récupérant la data depuis le localstorage
+    if (incomes.length !== incomesSubject.getLocalStorageInit().length) {
+      setIncomes(incomesSubject.getLocalStorageInit());
+    }
+
+    return () => incomesSubject.detach(onIncomesUpdated)
+  }, [incomes])
 
   const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
     setIncomes([...incomes, income]);
@@ -74,20 +98,6 @@ export function DashboardList() {
     setIncomes(filteredIncomes);
     expensesSubject.editExpenses(income);
   }
-
-  useEffect(() => {
-    expensesSubject.attach(onExpensesUpdated);
-
-    // On initialise le state en récupérant la data depuis le localstorage
-    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
-      
-      setExpenses(expensesSubject.getLocalStorageInit());
-    }
-    // setIncomes(incomesSubject.getLocalStorageInit());
-    console.log("list : " , expenses);
-
-    return () => expensesSubject.detach(onExpensesUpdated)
-  }, [expenses])
 
   const handleSubmitFormExpense = (item: itemObject) => {
     const expense_content: itemObject = {

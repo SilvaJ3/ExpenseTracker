@@ -33,18 +33,26 @@ export default function Table (props: any) {
       <S.Category_List>
         {
           props.category && props.category.map((item: string , index: number) => {
-            return (
-              <S.Category_List_item key={index} onClick={() => setCurrentCategory(item)}>
-                {item}
-              </S.Category_List_item>
-            )
+
+            if (item === currentCategory) {
+              return (
+                <S.Category_List_item key={index} onClick={() => setCurrentCategory(item)} active={"#E2BF63"}>
+                  {item}
+                </S.Category_List_item>
+              )
+            } else {
+              return (
+                <S.Category_List_item key={index} onClick={() => setCurrentCategory(item)}>
+                  {item}
+                </S.Category_List_item>
+              )
+            }
           })
         }
       </S.Category_List>
       <S.TableElement>
         <S.TableHead>
           <S.TableRow>
-            <S.TableRow_Th>#</S.TableRow_Th>
             <S.TableRow_Th>Catégorie</S.TableRow_Th>
             <S.TableRow_Th>Date</S.TableRow_Th>
             <S.TableRow_Th>Description</S.TableRow_Th>

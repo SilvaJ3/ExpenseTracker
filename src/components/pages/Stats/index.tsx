@@ -30,37 +30,40 @@ export default function Stats() {
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    // setExpenses(expensesSubject.getLocalStorageInit());
-
+    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
+      setExpenses(expensesSubject.getLocalStorageInit());
+    }
+    
     // Au montage du component, on subscribe
     expensesSubject.attach(onExpensesUpdated);
     // Au démontage du component, on unsubscribe
     return () => expensesSubject.detach(onExpensesUpdated);
-  }, [])
+  }, [expenses])
+  
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    // setIncomes(incomesSubject.getLocalStorageInit());
-
+    if (incomes.length !== incomesSubject.getLocalStorageInit().length) {
+      setIncomes(incomesSubject.getLocalStorageInit());
+    }
+    
     // Au montage du component, on subscribe
     incomesSubject.attach(onIncomesUpdated);
     // Au démontage du component, on unsubscribe
     return () => incomesSubject.detach(onIncomesUpdated);
-  }, [])
+  }, [incomes])
 
 
   function displayStats() {
     if (toggleStats) {
       return (
         <S.StatsContentWrapper>
-          Dépenses
           <StatsContent data={expenses} />
         </S.StatsContentWrapper>
       );
     } else {
       return (
         <S.StatsContentWrapper>
-          Recettes
           <StatsContent data={incomes} />
         </S.StatsContentWrapper>
       );
@@ -69,10 +72,12 @@ export default function Stats() {
 
   return (
     <S.Stats_Wrapper>
-      <BodyTitle text={"Statistiques"} />
+      <S.ResumeTitleWrapper>
+        <S.PageTitle>Statistics</S.PageTitle>
+      </S.ResumeTitleWrapper>
       <S.ToggleBtnWrapper>
-        <S.ToggleBtn onClick={() => setToggleStats(true)}>Dépenses</S.ToggleBtn>
-        <S.ToggleBtn onClick={() => setToggleStats(false)}>
+        <S.ToggleBtn onClick={() => setToggleStats(true)} borderRadius={"15px 0 0 15px"} className={toggleStats ? "active" : ""}>Dépenses</S.ToggleBtn>
+        <S.ToggleBtn onClick={() => setToggleStats(false)} borderRadius={"0 15px 15px 0"} className={toggleStats ? "" : "active"}>
           Recettes
         </S.ToggleBtn>
       </S.ToggleBtnWrapper>

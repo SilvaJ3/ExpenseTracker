@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as S from "./incomelist.styles";
 import Income from "../Income/index";
 import IncomesForm from "../IncomesForm/index";
-import { v4 as uuidv4 } from "uuid";
 
 type incomeObject = {
   id: string;
@@ -13,7 +12,7 @@ type incomeObject = {
 };
 
 export default function IncomeList(props: any) {
-  const [displayForm, setDisplayForm] = useState<boolean>(true);
+  const [displayForm, setDisplayForm] = useState<boolean>(false);
 
   return (
     <S.IncomeWrapper>

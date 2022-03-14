@@ -30,64 +30,46 @@ export default function Resume() {
   }
 
   useEffect(() => {
-    // On initialise le state en récupérant la data depuis le localstorage
-    // setExpenses(expensesSubject.getLocalStorageInit());
-
-    // Au montage du component, on subscribe
-    expensesSubject.attach(onExpensesUpdated);
-    // Au démontage du component, on unsubscribe
-    return () => expensesSubject.detach(onExpensesUpdated);
-  }, [])
-
-  useEffect(() => {
-    // On initialise le state en récupérant la data depuis le localstorage
-    // setIncomes(incomesSubject.getLocalStorageInit());
-
-    // Au montage du component, on subscribe
-    incomesSubject.attach(onIncomesUpdated);
-    // Au démontage du component, on unsubscribe
-    return () => incomesSubject.detach(onIncomesUpdated);
-  }, [])
-
-  useEffect(() => {
     let result = getJsonData(JsonDataType.expenses);
     setCategoryExpenses(result as string[]);
     result = getJsonData(JsonDataType.incomes);
     setCategoryIncomes(result as string[]);
   }, [])
 
-  const getLocalStorage = (item: string) => {
-    if (item == "expenses") {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setExpenses(parseStore);
-        }
-      }
-    } else {
-      if (localStorage.getItem(item)) {
-        const localStore = localStorage.getItem(item);
-        const parseStore = JSON.parse(localStore!);
-        if (parseStore[0]) {
-          setIncomes(parseStore);
-        }
-      }
-    }
-  };
-
   /* -------------------------------------------------------------------------- */
   /*                  useEffect pour récupérer le localStorage                  */
   /* -------------------------------------------------------------------------- */
 
-  // useEffect(() => {
-  //   getLocalStorage("expenses");
-  //   getLocalStorage("incomes");
-  // }, []);
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
+      setExpenses(expensesSubject.getLocalStorageInit());
+    }
+    
+    // Au montage du component, on subscribe
+    expensesSubject.attach(onExpensesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => expensesSubject.detach(onExpensesUpdated);
+  }, [expenses])
+  
+
+  useEffect(() => {
+    // On initialise le state en récupérant la data depuis le localstorage
+    if (incomes.length !== incomesSubject.getLocalStorageInit().length) {
+      setIncomes(incomesSubject.getLocalStorageInit());
+    }
+    
+    // Au montage du component, on subscribe
+    incomesSubject.attach(onIncomesUpdated);
+    // Au démontage du component, on unsubscribe
+    return () => incomesSubject.detach(onIncomesUpdated);
+  }, [incomes])
 
   return (
     <S.ResumePageWrapper>
-      <BodyTitle text={"Resume"} />
+      <S.ResumeTitleWrapper>
+        <S.PageTitle>Resume</S.PageTitle>
+      </S.ResumeTitleWrapper>
       <Table data={expenses} category={categoryExpenses} />
       <Table data={incomes} category={categoryIncomes} />
     </S.ResumePageWrapper>

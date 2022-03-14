@@ -19,8 +19,8 @@ interface iChartProps {
 export default function StatsContent(props: iChartProps) {
   return (
     <S.StatsWrapper>
-      <Chart datainfo={props.data} />
       <StatsChartDetails datainfo={props.data} />
+      <Chart datainfo={props.data} />
     </S.StatsWrapper>
   );
 }

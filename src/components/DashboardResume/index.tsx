@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import * as S from "./dashboardresume.styles"
-import Text from "../common/Text/Text"
 import DashboardCharts from "../DashboardCharts/index"
 import _ from "lodash"
-import useIncomes from '../../hooks/useIncomes'
 import expensesSubject, { ExpensesObserver } from "../../hooks/useExpensesObserver";
 import incomesSubject, { IncomesObserver } from '../../hooks/useIncomesObserver'
 import DashboardResumeRecap from '../DashboardResumeRecap/index'
@@ -32,38 +30,40 @@ export default function DashboardResume () {
   }, [])
 
   const onExpensesUpdated: ExpensesObserver = (expense: itemObject) => {
-    
     setExpenses([...expenses, expense]);
   }
 
   const onIncomesUpdated: IncomesObserver = (income: itemObject) => {
-    setIncomes([...incomes, income])
+    setIncomes([...incomes, income]);
   }
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    setExpenses(expensesSubject.getLocalStorageInit());
+    if (expenses.length !== expensesSubject.getLocalStorageInit().length) {
+      setExpenses(expensesSubject.getLocalStorageInit());
+    }
     
     // Au montage du component, on subscribe
     expensesSubject.attach(onExpensesUpdated);
     // Au démontage du component, on unsubscribe
     return () => expensesSubject.detach(onExpensesUpdated);
-  }, [])
+  }, [expenses])
   
 
   useEffect(() => {
     // On initialise le state en récupérant la data depuis le localstorage
-    // setIncomes(incomesSubject.getLocalStorageInit());
+    if (incomes.length !== incomesSubject.getLocalStorageInit().length) {
+      setIncomes(incomesSubject.getLocalStorageInit());
+    }
     
     // Au montage du component, on subscribe
     incomesSubject.attach(onIncomesUpdated);
     // Au démontage du component, on unsubscribe
     return () => incomesSubject.detach(onIncomesUpdated);
-  }, [])
-
-  let value = 0;
+  }, [incomes])
 
   const getDataExpensesIncomes = () => {
+    
     console.log(expenses);
     
     const totalExpenses = _.sumBy(expenses, function(item) {return item.value});
@@ -74,8 +74,6 @@ export default function DashboardResume () {
   }
 
   useEffect(() => {
-    // setExpenses(expensesSubject.getLocalStorageInit());
-    // setIncomes(incomesSubject.getLocalStorageInit());
     getDataExpensesIncomes();
 
   }, [expenses, incomes])
@@ -86,7 +84,7 @@ export default function DashboardResume () {
       <DashboardCharts datainfo={[{name: "dépenses", value: expenseTotal}, {name: "recettes", value: incomeTotal}]}/>
       <DashboardResumeRecap expenses={expenseTotal} incomes={incomeTotal}/>
       {
-        colors && 
+        colors && expenseTotal >= 0 && incomeTotal >= 0 &&
         <S.RecapChartWrapper>
           <S.RecapChartLine>
             <S.RecapChartItem bgColor={colors[0]} width={(expenseTotal/(expenseTotal+incomeTotal))*100}/>

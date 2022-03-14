@@ -27,10 +27,14 @@ class IncomeSubject {
   // La function de mise à jour de notre donnée incomes qui enclenche également la notification
   public updateIncomes(income: itemObject) {
     let localStore = this.getLocalStorage();
-    localStore.push(income);
-    const incomeStringify = JSON.stringify(localStore)
-    localStorage.setItem("incomes", incomeStringify)
-    this.notify(income);
+    if (!localStore.some((item: itemObject) => item.id === income.id)) {
+      
+      localStore.push(income);
+      const incomeStringify = JSON.stringify(localStore)
+      localStorage.setItem("incomes", incomeStringify)
+      this.notify(income);
+      
+    }
   }
 
   public editIncomes(income: itemObject) {
@@ -62,8 +66,8 @@ class IncomeSubject {
   }
 
   // Function de notification 
-  private notify(expense: itemObject) {
-    this.observers.forEach(observer => observer(expense));
+  private notify(income: itemObject) {
+    this.observers.forEach(observer => observer(income));
   }
 
 }
