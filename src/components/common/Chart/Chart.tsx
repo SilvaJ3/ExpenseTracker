@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import * as S from "./chart.styles"
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import getJsonData, { JsonDataType } from '../../../hooks/getJsonData';
 import _ from "lodash"
 
@@ -43,12 +43,12 @@ export default function Chart (props: iChartProps) {
 
   useEffect(() => {
     mergeData();
-  }, [props.datainfo])
+  }, [])
     
-    useEffect(() => {
-      const result = getJsonData(JsonDataType.colors);
-      setColors(result as string[]);
-    }, [])
+  useEffect(() => {
+    const result = getJsonData(JsonDataType.colors);
+    setColors(result as string[]);
+  }, [])
 
 
   return (

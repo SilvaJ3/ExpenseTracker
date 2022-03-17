@@ -7,7 +7,7 @@ type ColorItem = {
 export const StatsDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-right: 60px;
   padding: 10px 20px;
   background-color: #C4C4C4;
   height: 500px;

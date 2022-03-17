@@ -8,3 +8,10 @@ export const StatsWrapper = styled.div`
     flex-direction: column;
   }
 `
+
+export const ChartWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+`
